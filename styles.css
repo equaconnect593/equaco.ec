@@ -1,15 +1,21 @@
 :root {
-    --primary: #1a3a5f; /* Azul oscuro del logo */
-    --secondary: #2a6eb8; /* Azul medio del logo */
-    --accent: #f9a826; /* Naranja/Amarillo del logo */
-    --light: #f5f7fa; /* Fondo gris muy claro */
-    --text: #333333; /* Gris oscuro para texto */
+    --primary: #1a3a5f;
+    /* Azul oscuro del logo */
+    --secondary: #2a6eb8;
+    /* Azul medio del logo */
+    --accent: #f9a826;
+    /* Naranja/Amarillo del logo */
+    --light: #f5f7fa;
+    /* Fondo gris muy claro */
+    --text: #333333;
+    /* Gris oscuro para texto */
     --text-muted: #555555;
     --white: #ffffff;
     --shadow-sm: 0 4px 6px rgba(26, 58, 95, 0.05);
     --shadow-md: 0 10px 20px rgba(26, 58, 95, 0.08);
     --shadow-lg: 0 20px 40px rgba(26, 58, 95, 0.12);
-    --shadow-glow: 0 15px 30px rgba(249, 168, 38, 0.25); /* Resplandor naranja */
+    --shadow-glow: 0 15px 30px rgba(249, 168, 38, 0.25);
+    /* Resplandor naranja */
     --transition: all 0.3s ease;
 }
 
@@ -39,7 +45,10 @@ section {
     padding: 100px 0;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
     color: var(--primary);
     margin-bottom: 20px;
 }
@@ -202,7 +211,7 @@ header {
     color: var(--white);
     max-width: 900px;
     margin: 0 auto 25px;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .hero p {
@@ -247,7 +256,7 @@ header {
     left: 0;
     width: 100%;
     height: 100%;
-    border: 1px solid rgba(255,255,255,0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 12px;
     pointer-events: none;
     z-index: 10;
@@ -273,7 +282,8 @@ header {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 40px;
-    align-items: start; /* Previene que las tarjetas adyacentes se estiren dejando espacios en blanco */
+    align-items: start;
+    /* Previene que las tarjetas adyacentes se estiren dejando espacios en blanco */
 }
 
 .service-card {
@@ -282,15 +292,18 @@ header {
     overflow: hidden;
     box-shadow: var(--shadow-sm);
     transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border: 1px solid rgba(26, 58, 95, 0.05); /* Border azul muy suave */
+    border: 1px solid rgba(26, 58, 95, 0.05);
+    /* Border azul muy suave */
     display: flex;
     flex-direction: column;
 }
 
 .service-card:hover {
     transform: translateY(-15px);
-    box-shadow: var(--shadow-glow); /* Efecto glow naranja */
-    border-color: rgba(249, 168, 38, 0.4); /* Border naranja encendido al hover */
+    box-shadow: var(--shadow-glow);
+    /* Efecto glow naranja */
+    border-color: rgba(249, 168, 38, 0.4);
+    /* Border naranja encendido al hover */
 }
 
 .service-image {
@@ -333,12 +346,14 @@ header {
     display: flex;
     flex-direction: column;
     position: relative;
-    border-top: 3px solid transparent; /* Efecto animado del top border */
+    border-top: 3px solid transparent;
+    /* Efecto animado del top border */
     transition: var(--transition);
 }
 
 .service-card:hover .service-content {
-    border-top-color: var(--accent); /* Resalta el naranja */
+    border-top-color: var(--accent);
+    /* Resalta el naranja */
 }
 
 .service-content h3 {
@@ -353,10 +368,11 @@ header {
     color: var(--accent);
 }
 
-.service-content > p {
+.service-content>p {
     margin-bottom: 25px;
     flex: 1;
-    min-height: 80px; /* Asegura un aspecto parejo antes de expandir */
+    min-height: 80px;
+    /* Asegura un aspecto parejo antes de expandir */
 }
 
 .service-details {
@@ -551,7 +567,8 @@ header {
     width: 200px;
     height: 200px;
     border-radius: 50%;
-    background: rgba(249, 168, 38, 0.15); /* Círculo decorativo naranja */
+    background: rgba(249, 168, 38, 0.15);
+    /* Círculo decorativo naranja */
 }
 
 .contact-info-card h3 {
@@ -560,8 +577,8 @@ header {
     margin-bottom: 15px;
 }
 
-.contact-info-card > p {
-    color: rgba(255,255,255,0.9);
+.contact-info-card>p {
+    color: rgba(255, 255, 255, 0.9);
     margin-bottom: 40px;
 }
 
@@ -580,7 +597,8 @@ header {
 }
 
 .contact-icon {
-    background-color: var(--accent); /* Naranja resalta la ícono de contacto */
+    background-color: var(--accent);
+    /* Naranja resalta la ícono de contacto */
     color: var(--primary);
     width: 45px;
     height: 45px;
@@ -603,13 +621,13 @@ header {
 
 .contact-item p {
     margin-bottom: 0;
-    color: rgba(255,255,255,0.95);
+    color: rgba(255, 255, 255, 0.95);
 }
 
 .whatsapp-alt {
     margin-top: 20px;
-    background-color: rgba(255,255,255,0.15);
-    border: 1px solid rgba(255,255,255,0.3);
+    background-color: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     color: var(--white);
     box-shadow: none;
     position: relative;
@@ -662,7 +680,8 @@ header {
 }
 
 .form-control:focus {
-    border-color: var(--accent); /* Enfocar usa naranja llama la atención */
+    border-color: var(--accent);
+    /* Enfocar usa naranja llama la atención */
     background-color: var(--white);
     outline: none;
     box-shadow: 0 0 0 4px rgba(249, 168, 38, 0.2);
@@ -706,8 +725,10 @@ textarea.form-control {
 .whatsapp-float::before {
     content: '';
     position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background-color: #25D366;
     border-radius: 50%;
     z-index: -1;
@@ -727,8 +748,15 @@ textarea.form-control {
 }
 
 @keyframes pulse-ring {
-    0% { transform: scale(1); opacity: 0.8; }
-    100% { transform: scale(1.5); opacity: 0; }
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
 }
 
 /* SCROLL ANIMATION CLASSES */
@@ -756,9 +784,9 @@ textarea.form-control {
     transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.reveal.active, 
-.reveal-left.active, 
-.reveal-right.active, 
+.reveal.active,
+.reveal-left.active,
+.reveal-right.active,
 .reveal-scale.active {
     opacity: 1;
     transform: translate(0) scale(1);
@@ -769,7 +797,8 @@ footer {
     background-color: var(--primary);
     color: var(--white);
     padding: 70px 0 20px;
-    border-top: 5px solid var(--accent); /* Línea naranja divisora en pie de página */
+    border-top: 5px solid var(--accent);
+    /* Línea naranja divisora en pie de página */
 }
 
 .footer-container {
@@ -780,7 +809,8 @@ footer {
 }
 
 .footer-column h3 {
-    color: var(--accent); /* Títulos ressaltan en naranja */
+    color: var(--accent);
+    /* Títulos ressaltan en naranja */
     margin-bottom: 25px;
     font-size: 1.2rem;
     font-weight: 700;
@@ -856,15 +886,15 @@ footer {
     .about-content {
         flex-direction: column;
     }
-    
+
     .contact-wrapper {
         grid-template-columns: 1fr;
     }
-    
+
     .contact-info-card {
         padding: 40px 30px;
     }
-    
+
     .contact-form-card {
         padding: 40px 30px;
     }
@@ -901,7 +931,7 @@ footer {
         padding: 12px 30px;
         text-align: left;
     }
-    
+
     .nav-links a::after {
         display: none;
     }
@@ -921,11 +951,11 @@ footer {
     h2 {
         font-size: 2rem;
     }
-    
+
     .contact::before {
         height: 350px;
     }
-    
+
     section {
         padding: 60px 0;
     }
@@ -940,16 +970,17 @@ footer {
     .footer-container {
         grid-template-columns: 1fr;
     }
-    
+
     .services-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .about-image {
         border-radius: 8px;
     }
-    
-    .contact-info-card, .contact-form-card {
+
+    .contact-info-card,
+    .contact-form-card {
         padding: 30px 20px;
     }
 }

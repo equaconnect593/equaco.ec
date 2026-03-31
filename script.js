@@ -41,11 +41,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mobile menu toggle
     const mobileMenuBtn = document.querySelector('.mobile-menu');
     const navLinks = document.querySelector('.nav-links');
-    
+
     if (mobileMenuBtn && navLinks) {
         mobileMenuBtn.addEventListener('click', () => {
             navLinks.classList.toggle('active');
-            if(navLinks.classList.contains('active')){
+            if (navLinks.classList.contains('active')) {
                 mobileMenuBtn.innerHTML = '&times;';
             } else {
                 mobileMenuBtn.innerHTML = '&#9776;';
@@ -56,12 +56,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Service details toggle
     const serviceButtons = document.querySelectorAll('.service-toggle');
     serviceButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const details = this.nextElementSibling;
             if (!details) return;
-            
+
             details.classList.toggle('active');
-            
+
             if (details.classList.contains('active')) {
                 this.textContent = 'Ver menos';
             } else {
@@ -72,49 +72,85 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Smooth scrolling for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
+        anchor.addEventListener('click', function (e) {
             e.preventDefault();
-            
+
             const targetId = this.getAttribute('href');
             if (targetId === '#' || !targetId) return;
-            
+
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
                 const headerOffset = 80;
                 const elementPosition = targetElement.getBoundingClientRect().top;
                 const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-  
+
                 window.scrollTo({
                     top: offsetPosition,
                     behavior: 'smooth'
                 });
-                
+
                 // Close mobile menu if open
-                if(navLinks) navLinks.classList.remove('active');
-                if(mobileMenuBtn) mobileMenuBtn.innerHTML = '&#9776;';
+                if (navLinks) navLinks.classList.remove('active');
+                if (mobileMenuBtn) mobileMenuBtn.innerHTML = '&#9776;';
             }
         });
     });
 
-    // Form submission native
+    // Form submission via FormSubmit AJAX (Sin redirección)
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            // Permitimos el envío nativo al desactivar event.preventDefault()
+        contactForm.addEventListener('submit', function (e) {
+            e.preventDefault(); // Evita la redirección a otra página
+
             const submitBtn = contactForm.querySelector('button[type="submit"]');
-            
-            // Pequeño timeout para dar feedback visual sin frenar el submit de HTML nativo
-            setTimeout(() => {
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Redirigiendo de forma segura...';
-                submitBtn.disabled = true;
-                submitBtn.style.opacity = '0.7';
-            }, 50);
+            const originalBtnText = submitBtn.innerHTML;
+
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.7';
+
+            const formData = new FormData(contactForm);
+
+            // Requerido por FormSubmit AJAX: Transformar FormData a JSON
+            const object = {};
+            formData.forEach((value, key) => {
+                object[key] = value;
+            });
+            const json = JSON.stringify(object);
+
+            fetch('https://formsubmit.co/ajax/equaconnect593@outlook.com', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: json
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success === 'true' || data.success === true) {
+                        alert('¡Gracias! Hemos recibido tu mensaje de confirmación correctamente.');
+                        contactForm.reset();
+                    } else {
+                        alert('Hubo un pequeño error: ' + (data.message || 'Desconocido'));
+                    }
+                    submitBtn.innerHTML = originalBtnText;
+                    submitBtn.disabled = false;
+                    submitBtn.style.opacity = '1';
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert('Problema de conexión al enviar. Por favor intentalo  de nuevo o escribe por WhatsApp.');
+                    submitBtn.innerHTML = originalBtnText;
+                    submitBtn.disabled = false;
+                    submitBtn.style.opacity = '1';
+                });
         });
     }
 
     // Header background on scroll
     const header = document.querySelector('header');
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
         if (!header) return;
         if (window.scrollY > 50) {
             header.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
@@ -132,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     const carouselContainer = document.querySelector('.partners-carousel');
-    
+
     if (track && prevBtn && nextBtn && carouselContainer) {
         const partnerItems = document.querySelectorAll('.partner-item');
         if (partnerItems.length === 0) return;
@@ -143,12 +179,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const itemMargin = parseFloat(itemStyle.marginLeft) + parseFloat(itemStyle.marginRight);
             const itemWidth = partnerItems[0].offsetWidth + itemMargin;
             const itemsPerView = Math.floor(containerWidth / itemWidth) || 1;
-            
+
             let totalItemsWidth = 0;
             partnerItems.forEach(item => {
                 totalItemsWidth += item.offsetWidth + itemMargin;
             });
-            
+
             return { containerWidth, itemWidth, itemsPerView, totalItemsWidth };
         }
 
@@ -166,7 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        prevBtn.addEventListener('click', function() {
+        prevBtn.addEventListener('click', function () {
             if (position < 0) {
                 dimensions = calculateDimensions();
                 const moveAmount = dimensions.itemWidth * dimensions.itemsPerView;
@@ -177,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        nextBtn.addEventListener('click', function() {
+        nextBtn.addEventListener('click', function () {
             dimensions = calculateDimensions();
             maxPosition = -(dimensions.totalItemsWidth - dimensions.containerWidth);
             if (position > maxPosition) {
@@ -192,9 +228,9 @@ document.addEventListener('DOMContentLoaded', () => {
         updateButtons();
 
         let resizeTimeout;
-        window.addEventListener('resize', function() {
+        window.addEventListener('resize', function () {
             clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(function() {
+            resizeTimeout = setTimeout(function () {
                 dimensions = calculateDimensions();
                 maxPosition = -(dimensions.totalItemsWidth - dimensions.containerWidth);
                 if (position < maxPosition) {
