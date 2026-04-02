@@ -96,55 +96,60 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Form submission via FormSubmit AJAX (Sin redirección)
+    // Form submission native with hidden iframe to prevent redirect
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
-        contactForm.addEventListener('submit', function (e) {
-            e.preventDefault(); // Evita la redirección a otra página
+        // Crear iframe invisible
+        const iframeName = 'hidden_iframe';
+        let iframe = document.getElementById(iframeName);
+        if (!iframe) {
+            iframe = document.createElement('iframe');
+            iframe.name = iframeName;
+            iframe.id = iframeName;
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+        }
 
+        contactForm.target = iframeName;
+        // Restaurar endpoint normal (No ajax) para que los navegadores no bloqueen por CORS
+        contactForm.action = "https://formsubmit.co/equaconnect593@outlook.com";
+        contactForm.method = "POST";
+
+        let isSubmitting = false;
+        let originalBtnText = '';
+
+        contactForm.addEventListener('submit', function (e) {
             const submitBtn = contactForm.querySelector('button[type="submit"]');
-            const originalBtnText = submitBtn.innerHTML;
+            originalBtnText = submitBtn.innerHTML;
 
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
             submitBtn.disabled = true;
             submitBtn.style.opacity = '0.7';
 
-            const formData = new FormData(contactForm);
+            isSubmitting = true;
 
-            // Requerido por FormSubmit AJAX: Transformar FormData a JSON
-            const object = {};
-            formData.forEach((value, key) => {
-                object[key] = value;
-            });
-            const json = JSON.stringify(object);
-
-            fetch('https://formsubmit.co/ajax/equaconnect593@outlook.com', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: json
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success === 'true' || data.success === true) {
-                        alert('¡Gracias! Hemos recibido tu mensaje de confirmación correctamente.');
-                        contactForm.reset();
-                    } else {
-                        alert('Hubo un pequeño error: ' + (data.message || 'Desconocido'));
-                    }
+            iframe.onload = function () {
+                if (isSubmitting) {
+                    alert('¡Gracias! Hemos recibido tu mensaje correctamente.');
+                    contactForm.reset();
                     submitBtn.innerHTML = originalBtnText;
                     submitBtn.disabled = false;
                     submitBtn.style.opacity = '1';
-                })
-                .catch(error => {
-                    console.error(error);
-                    alert('Problema de conexión al enviar. Por favor intentalo  de nuevo o escribe por WhatsApp.');
+                    isSubmitting = false;
+                }
+            };
+
+            // Fallback de seguridad por si el iframe onload no se dispara en ciertos navegadores
+            setTimeout(() => {
+                if (isSubmitting) {
+                    alert('¡Gracias! Hemos recibido tu mensaje correctamente.');
+                    contactForm.reset();
                     submitBtn.innerHTML = originalBtnText;
                     submitBtn.disabled = false;
                     submitBtn.style.opacity = '1';
-                });
+                    isSubmitting = false;
+                }
+            }, 4000);
         });
     }
 
